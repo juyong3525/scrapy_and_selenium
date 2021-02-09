@@ -2,8 +2,13 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 
-chromedriver = '/usr/local/Cellar/chromedriver/chromedriver'
-driver = webdriver.Chrome(chromedriver)
+# chromedriver 사용
+# chromedriver = '/usr/local/Cellar/chromedriver/chromedriver'
+# driver = webdriver.Chrome(chromedriver)
+
+# phantomJS 사용
+phantomjs_file = '/usr/local/bin/phantomjs'
+driver = webdriver.PhantomJS(phantomjs_file)
 
 driver.get('http://www.python.org')
 assert "Python" in driver.title
