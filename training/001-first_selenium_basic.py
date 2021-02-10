@@ -12,15 +12,15 @@ import time
 
 # headless chrome 사용
 chromedriver = '/usr/local/Cellar/chromedriver/chromedriver'
-headless_options = webdriver.ChromeOptions()
-headless_options.add_argument('headless')
-headless_options.add_argument('window-size=1920x1080')
-headless_options.add_argument('disable-gpu')
-headless_options.add_argument(
+options = webdriver.ChromeOptions()
+options.add_argument('headless')
+options.add_argument('window-size=1920x1080')
+options.add_argument('disable-gpu')
+options.add_argument(
     'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
-headless_options.add_argument('lang=ko_KR')
+options.add_argument('lang=ko_KR')
 
-driver = webdriver.Chrome(chromedriver, options=headless_options)
+driver = webdriver.Chrome(chromedriver, options=options)
 
 
 driver.get('http://www.python.org')
