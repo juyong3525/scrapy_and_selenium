@@ -20,4 +20,7 @@ head_title = driver.find_element_by_css_selector('head > title')
 # head에 있는 텍스트 데이터는 .get_attribute('text')
 print(head_title.get_attribute('text'))
 
+navi = driver.find_element_by_css_selector("div[role='navigation']")
+print(navi.text)
+
 driver.quit()
