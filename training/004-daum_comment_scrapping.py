@@ -8,6 +8,7 @@ import time
 chromedriver = '/usr/local/Cellar/chromedriver/chromedriver'
 driver = webdriver.Chrome(chromedriver)
 driver.get('https://news.v.daum.net/v/20210215132400800')
+
 # 더 보기 버튼 누르기
 loop, count = True, 0
 
@@ -24,5 +25,14 @@ while loop and count < 10:
         time.sleep(2)
     except TimeoutException:
         loop = False
+
+# 댓글 크롤링
+comment_box = driver.find_element_by_css_selector(
+    '#alex-area > div > div > div > div.cmt_box > ul.list_comment')
+comment_list = comment_box.find_elements_by_tag_name('li')
+for num, comment_item in enumerate(comment_list):
+    print("[" + str(num + 1) + "]",
+          comment_item.find_element_by_css_selector('div p').text)
+
 
 driver.quit()
