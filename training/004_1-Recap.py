@@ -15,7 +15,8 @@ while loop and count < 10:
     try:
         element = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located(
-                (By.CSS_SELECTOR, '#alex-area > div > div > div > div.cmt_box > div.alex_more > button'))
+                (By.CSS_SELECTOR, '#alex-area > div > div > div > div.cmt_box > div.alex_more > button')
+            )
         )
         more_button = driver.find_element_by_css_selector(
             '#alex-area > div > div > div > div.cmt_box > div.alex_more > button')
