@@ -1,4 +1,5 @@
 import scrapy
+from ecommerce.items import EcommerceItem
 
 
 class GmarketCategoryAllSpider(scrapy.Spider):
@@ -17,25 +18,27 @@ class GmarketCategoryAllSpider(scrapy.Spider):
 
         # 1st category crawling
         for index, category_link in enumerate(category_links):
-            yield scrapy.Request(url=f'http://corners.gmarket.co.kr{category_link}', callback=self.parse_items, meta={'maincategory_name': category_names[index]})
+            yield scrapy.Request(url=f'http://corners.gmarket.co.kr{category_link}', callback=self.parse_items, meta={'main_category_name': category_names[index], 'sub_category_name': 'ALL'})
         # 2nd category crawling
         for index, category_link in enumerate(category_links):
-            yield scrapy.Request(url=f'http://corners.gmarket.co.kr{category_link}', callback=self.parse_subcategory, meta={'maincategory_name': category_names[index]})
+            yield scrapy.Request(url=f'http://corners.gmarket.co.kr{category_link}', callback=self.parse_subcategory, meta={'main_category_name': category_names[index]})
 
     def parse_subcategory(self, response):
-        print("parse_subcategory", response.meta['maincategory_name'])
+        print("parse_subcategory", response.meta['main_category_name'])
         subcategory_links = response.css(
             'div.navi.group > ul > li > a::attr(href)').getall()
-        subcategory_names = response.css(
+        sub_category_names = response.css(
             'div.navi.group > ul > li > a::text').getall()
         for index, subcategory_link in enumerate(subcategory_links):
-            yield scrapy.Request(url=f'http://corners.gmarket.co.kr{subcategory_link}', callback=self.parse_items, meta={'maincategory_name': response.meta['maincategory_name'], 'subcategory_name': subcategory_names[index]})
+            yield scrapy.Request(url=f'http://corners.gmarket.co.kr{subcategory_link}', callback=self.parse_items, meta={'main_category_name': response.meta['main_category_name'], 'sub_category_name': sub_category_names[index]})
 
     def parse_items(self, response):
-        print("parse_items", response.meta['maincategory_name'])
+        print("parse_items",
+              response.meta['main_category_name'], response.meta['sub_category_name'])
 
         best_items = response.css('div.best-list')
         for index, item in enumerate(best_items[1].css('li')):
+            doc = EcommerceItem()
             ranking = index + 1
             title = item.css('a.itemname::text').get()
             ori_price = item.css('div.o-price::text').get()
@@ -51,4 +54,12 @@ class GmarketCategoryAllSpider(scrapy.Spider):
             else:
                 discount_percent = discount_percent.replace('%', '')
 
-            print(ranking, title, ori_price, dis_price, discount_percent)
+            doc['main_category_name'] = response.meta['main_category_name']
+            doc['sub_category_name'] = response.meta['sub_category_name']
+            doc['ranking'] = ranking
+            doc['title'] = title
+            doc['ori_price'] = ori_price
+            doc['dis_price'] = dis_price
+            doc['discount_percent'] = discount_percent
+            # print(ranking, title, ori_price, dis_price, discount_percent)
+            yield doc
