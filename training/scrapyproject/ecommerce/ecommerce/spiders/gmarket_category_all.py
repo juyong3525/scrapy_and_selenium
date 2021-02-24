@@ -1,6 +1,9 @@
 import scrapy
 from ecommerce.items import EcommerceItem
 
+global primary_key
+primary_key = 0
+
 
 class GmarketCategoryAllSpider(scrapy.Spider):
     name = 'gmarket_category_all'
@@ -33,6 +36,7 @@ class GmarketCategoryAllSpider(scrapy.Spider):
             yield scrapy.Request(url=f'http://corners.gmarket.co.kr{subcategory_link}', callback=self.parse_items, meta={'main_category_name': response.meta['main_category_name'], 'sub_category_name': sub_category_names[index]})
 
     def parse_items(self, response):
+        global primary_key
         print("parse_items",
               response.meta['main_category_name'], response.meta['sub_category_name'])
 
@@ -58,8 +62,10 @@ class GmarketCategoryAllSpider(scrapy.Spider):
             doc['sub_category_name'] = response.meta['sub_category_name']
             doc['ranking'] = ranking
             doc['title'] = title
-            doc['ori_price'] = ori_price
-            doc['dis_price'] = dis_price
-            doc['discount_percent'] = discount_percent
+            doc['ori_price'] = int(ori_price)
+            doc['dis_price'] = int(dis_price)
+            doc['discount_percent'] = int(discount_percent)
+            doc['primary_key'] = primary_key
             # print(ranking, title, ori_price, dis_price, discount_percent)
             yield doc
+            primary_key += 1

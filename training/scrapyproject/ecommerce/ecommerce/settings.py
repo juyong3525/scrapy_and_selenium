@@ -20,7 +20,7 @@ NEWSPIDER_MODULE = 'ecommerce.spiders'
 ROBOTSTXT_OBEY = True
 
 FEED_EXPORT_ENCODING = 'utf-8'
-LOG_FILE = 'log.txt'
+# LOG_FILE = 'log.txt'
 DUPEFILTER_CLASS = 'scrapy.dupefilters.BaseDupeFilter'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
@@ -66,9 +66,9 @@ DUPEFILTER_CLASS = 'scrapy.dupefilters.BaseDupeFilter'
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#     'ecommerce.pipelines.EcommercePipeline': 300,
-# }
+ITEM_PIPELINES = {
+    'ecommerce.pipelines.EcommercePipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

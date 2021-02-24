@@ -16,3 +16,4 @@ class EcommerceItem(scrapy.Item):
     ori_price = scrapy.Field()
     dis_price = scrapy.Field()
     discount_percent = scrapy.Field()
+    primary_key = scrapy.Field()
