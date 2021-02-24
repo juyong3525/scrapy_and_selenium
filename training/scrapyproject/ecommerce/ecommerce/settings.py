@@ -20,6 +20,8 @@ NEWSPIDER_MODULE = 'ecommerce.spiders'
 ROBOTSTXT_OBEY = True
 
 FEED_EXPORT_ENCODING = 'utf-8'
+LOG_FILE = 'log.txt'
+DUPEFILTER_CLASS = 'scrapy.dupefilters.BaseDupeFilter'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
