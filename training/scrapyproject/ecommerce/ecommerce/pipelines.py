@@ -19,7 +19,7 @@ class EcommercePipeline:
         self.db = pymysql.connect(host='localhost',
                                   port=3306,
                                   user='root',
-                                  passwd='killerqueen3525',  # git에 push 하지 말 것
+                                  passwd='?????',  # git에 push 하지 말 것
                                   db='scrapy_ecommerce',
                                   charset='utf8')
 
